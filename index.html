@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta Comercial · Real Taquería · BLÜR Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#ffffff;--text:#111111;--muted:#888888;--border:#e5e5e5;--surface:#f7f7f7;
+    --orange:#E8520A;--orange-light:#FF7A35;--blue:#3B72FF;--purple:#6C44E0;--green:#1DBF73;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Albert Sans',sans-serif;overflow-x:hidden;position:relative;}
+  .blob-container{position:fixed;pointer-events:none;z-index:0;}
+  .blob-tr{top:-120px;right:-120px;width:480px;height:480px;}
+  .blob-br{bottom:-80px;right:-80px;width:380px;height:380px;}
+  .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:0.55;}
+  .blob-tr .b1{width:300px;height:300px;background:radial-gradient(circle,#FF6B2B,#E8400A);top:80px;right:60px;}
+  .blob-tr .b2{width:220px;height:220px;background:radial-gradient(circle,#4A8AFF,#2B5CE8);top:220px;right:180px;opacity:0.5;}
+  .blob-tr .b3{width:160px;height:160px;background:radial-gradient(circle,#7B54E0,#5530CC);top:260px;right:100px;opacity:0.45;}
+  .blob-br .b1{width:240px;height:240px;background:radial-gradient(circle,#7B54E0,#5530CC);bottom:60px;right:40px;}
+  .blob-br .b2{width:180px;height:180px;background:radial-gradient(circle,#FF6B2B,#E8400A);bottom:160px;right:150px;opacity:0.5;}
+  .wrapper{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 40px 120px;}
+  .site-header{display:flex;justify-content:space-between;align-items:center;padding:32px 0 28px;border-bottom:1px solid var(--border);}
+  .site-header .logo img{height:46px;width:auto;display:block;object-fit:contain;}
+  .site-header .doc-tag{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+  .cover{padding:100px 0 80px;border-bottom:1px solid var(--border);}
+  .cover .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);margin-bottom:28px;}
+  .cover h1{font-size:clamp(40px,6vw,64px);font-weight:800;line-height:1.04;letter-spacing:-0.03em;max-width:740px;margin-bottom:32px;}
+  .cover h1 em{font-style:normal;color:var(--orange);}
+  .cover .subtitle{font-size:18px;font-weight:400;color:var(--muted);max-width:560px;line-height:1.6;margin-bottom:48px;}
+  .cover-meta{display:flex;gap:40px;padding-top:40px;border-top:1px solid var(--border);flex-wrap:wrap;}
+  .cover-meta-item label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+  .cover-meta-item span{font-size:15px;font-weight:600;}
+  .section{padding:80px 0;border-bottom:1px solid var(--border);}
+  .section-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);margin-bottom:16px;}
+  .section-title{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-0.025em;line-height:1.08;margin-bottom:12px;}
+  .section-title em{font-style:italic;font-weight:300;color:var(--muted);}
+  .section-intro{font-size:16px;color:var(--muted);line-height:1.65;max-width:600px;margin-bottom:52px;}
+  .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+  .problem-card{background:var(--bg);padding:36px 32px;}
+  .problem-card .num{font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--orange);margin-bottom:16px;}
+  .problem-card h3{font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px;line-height:1.2;}
+  .problem-card p{font-size:14px;color:var(--muted);line-height:1.65;}
+  .problem-card p strong{color:var(--text);font-weight:600;}
+  .slp-box{background:#111111;color:white;border-radius:16px;padding:36px 40px;margin-bottom:40px;}
+  .slp-box .slp-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#FF7A35;margin-bottom:14px;}
+  .slp-box h3{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-bottom:14px;line-height:1.1;}
+  .slp-box p{font-size:14px;line-height:1.7;color:rgba(255,255,255,0.6);max-width:640px;}
+  .slp-box p strong{color:white;}
+  .finding-list{display:flex;flex-direction:column;}
+  .finding{display:flex;gap:20px;align-items:flex-start;padding:28px 0;border-top:1px solid var(--border);}
+  .finding:first-child{border-top:none;}
+  .finding-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;margin-top:2px;}
+  .finding-icon.orange{background:#FFF0EA;}
+  .finding-icon.blue{background:#EEF3FF;}
+  .finding-icon.purple{background:#F3EFFF;}
+  .finding-icon.green{background:#E8FBF3;}
+  .finding-body h4{font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-0.01em;}
+  .finding-body p{font-size:14px;color:var(--muted);line-height:1.65;}
+  .finding-body p strong{color:var(--text);font-weight:600;}
+  .highlight-row{display:flex;gap:24px;margin:0 0 48px 0;}
+  .highlight-pill{flex:1;background:var(--surface);border-radius:12px;padding:28px 20px;text-align:center;}
+  .highlight-pill .hp-num{font-size:42px;font-weight:800;letter-spacing:-0.03em;margin-bottom:6px;}
+  .highlight-pill .hp-num.orange{color:var(--orange);}
+  .highlight-pill .hp-label{font-size:12px;color:var(--muted);font-weight:500;line-height:1.4;}
+  .alcance-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:32px;}
+  .alcance-card{background:var(--bg);padding:32px 28px;}
+  .alcance-card .ac-icon{font-size:28px;margin-bottom:16px;display:block;}
+  .alcance-card h3{font-size:17px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em;}
+  .alcance-card p{font-size:13px;color:var(--muted);line-height:1.6;}
+  .alcance-card .ac-quantity{display:inline-block;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:var(--surface);color:var(--text);}
+  .alcance-full{background:var(--surface);border-radius:16px;padding:32px;}
+  .alcance-full h3{font-size:16px;font-weight:700;margin-bottom:20px;}
+  .alcance-items{display:flex;flex-wrap:wrap;gap:10px;}
+  .alcance-item{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:500;}
+  .alcance-item .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;}
+  .flow-cycle-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+  .flow-steps{display:flex;gap:0;}
+  .flow-step{flex:1;position:relative;}
+  .flow-step:not(:last-child)::after{content:'→';position:absolute;right:-12px;top:28px;font-size:18px;color:var(--orange);font-weight:700;z-index:2;}
+  .flow-step-inner{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px 16px;margin-right:24px;height:100%;}
+  .flow-step:last-child .flow-step-inner{margin-right:0;}
+  .flow-step .fs-tag{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:20px;background:#FFF0EA;color:var(--orange);display:inline-block;margin-bottom:10px;}
+  .flow-step h4{font-size:14px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;line-height:1.2;}
+  .flow-step ul{list-style:none;display:flex;flex-direction:column;gap:5px;}
+  .flow-step ul li{font-size:12px;color:var(--muted);line-height:1.4;padding-left:12px;position:relative;}
+  .flow-step ul li::before{content:'·';position:absolute;left:0;color:var(--orange);font-weight:700;font-size:16px;line-height:1;top:-1px;}
+  .quincena-row{background:var(--surface);border-radius:16px;padding:28px 32px;display:flex;gap:32px;align-items:flex-start;margin-top:16px;margin-bottom:16px;}
+  .quincena-col{flex:1;}
+  .quincena-col .qc-title{font-size:13px;font-weight:700;margin-bottom:8px;}
+  .quincena-col p{font-size:13px;color:var(--muted);line-height:1.6;}
+  .quincena-divider{width:1px;background:var(--border);flex-shrink:0;}
+  .flow-quarterly{background:#111111;border-radius:16px;padding:32px 36px;display:flex;gap:24px;align-items:flex-start;}
+  .flow-quarterly .fq-icon{font-size:28px;flex-shrink:0;}
+  .flow-quarterly h4{font-size:17px;font-weight:800;color:white;margin-bottom:10px;letter-spacing:-0.01em;}
+  .flow-quarterly p{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;}
+  .flow-quarterly p strong{color:white;}
+  .inversion-box{background:#111111;border-radius:20px;padding:52px 48px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:40px;}
+  .inv-left .inv-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:12px;}
+  .inv-left .inv-price{font-size:52px;font-weight:800;letter-spacing:-0.04em;color:white;line-height:1;margin-bottom:8px;}
+  .inv-left .inv-price span{font-size:20px;font-weight:400;color:rgba(255,255,255,0.5);}
+  .inv-left .inv-sub{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.5;max-width:260px;}
+  .inv-conditions{display:flex;flex-direction:column;gap:14px;min-width:280px;}
+  .inv-condition{display:flex;align-items:flex-start;gap:12px;}
+  .inv-condition .ic-dot{width:6px;height:6px;border-radius:50%;background:var(--orange-light);flex-shrink:0;margin-top:6px;}
+  .inv-condition p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;}
+  .inv-condition p strong{color:white;font-weight:600;}
+  .analisis-precio{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 36px;margin-bottom:16px;}
+  .analisis-precio h4{font-size:15px;font-weight:700;margin-bottom:20px;letter-spacing:-0.01em;}
+  .comparativo{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px;}
+  .comp-item{background:var(--bg);padding:18px 20px;}
+  .comp-item .comp-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:6px;}
+  .comp-item .comp-price{font-size:20px;font-weight:800;letter-spacing:-0.02em;}
+  .comp-item .comp-price.highlight{color:var(--orange);}
+  .comp-item .comp-desc{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4;}
+  .analisis-precio p{font-size:13px;color:var(--muted);line-height:1.6;}
+  .analisis-precio p strong{color:var(--text);font-weight:600;}
+  .bonus-box{background:linear-gradient(135deg,#FFF0EA 0%,#FFF8F5 100%);border:1px solid #FFD5C0;border-radius:16px;padding:32px 36px;margin-bottom:16px;display:flex;align-items:flex-start;gap:24px;}
+  .bonus-icon{font-size:32px;flex-shrink:0;margin-top:2px;}
+  .bonus-body h4{font-size:17px;font-weight:800;color:var(--orange);margin-bottom:10px;}
+  .bonus-body p{font-size:14px;color:#8B4A2B;line-height:1.65;}
+  .bonus-body p strong{color:var(--orange);font-weight:700;}
+  .no-incluye{background:var(--surface);border-radius:12px;padding:24px 28px;display:flex;gap:16px;align-items:flex-start;}
+  .no-incluye .ni-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+  .no-incluye h4{font-size:13px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}
+  .no-incluye p{font-size:13px;color:var(--muted);line-height:1.6;}
+  .cierre{padding:80px 0 0;text-align:center;}
+  .cierre .cierre-label{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);margin-bottom:24px;}
+  .cierre h2{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-0.03em;line-height:1.06;margin-bottom:24px;}
+  .cierre p{font-size:17px;color:var(--muted);max-width:500px;margin:0 auto;line-height:1.6;}
+  .site-footer{padding:40px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .site-footer p{font-size:12px;color:var(--muted);text-align:right;}
+  .method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:32px;}
+  .method-phase{background:var(--bg);padding:32px 22px;display:flex;flex-direction:column;}
+  .method-num{font-size:52px;font-weight:800;letter-spacing:-0.04em;color:var(--orange);line-height:1;margin-bottom:14px;}
+  .method-header{background:var(--text);color:white;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:8px 12px;border-radius:6px;margin-bottom:16px;line-height:1.4;}
+  .method-obj{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:16px;}
+  .method-obj strong{color:var(--text);font-weight:600;}
+  .method-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:auto;}
+  .method-list li{font-size:12px;color:var(--muted);line-height:1.45;padding-left:14px;position:relative;}
+  .method-list li::before{content:'·';position:absolute;left:0;color:var(--orange);font-weight:700;font-size:16px;line-height:1;top:-1px;}
+  .method-note{font-size:12px;font-weight:700;color:var(--text);margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+
+  @media(max-width:768px){
+    .blob-tr,.blob-br{display:none;}
+    .wrapper{padding:0 24px 80px;}
+    .site-header{flex-direction:column;align-items:flex-start;gap:12px;padding:24px 0 20px;}
+    .cover{padding:60px 0 48px;}
+    .cover h1{font-size:clamp(32px,8vw,48px);}
+    .section{padding:56px 0;}
+    .problem-grid{grid-template-columns:1fr;}
+    .slp-box{padding:24px;}
+    .slp-box h3{font-size:18px;}
+    .highlight-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .highlight-pill .hp-num{font-size:32px;}
+    .alcance-grid{grid-template-columns:1fr;}
+    .method-grid{grid-template-columns:1fr 1fr;}
+    .flow-steps{flex-direction:column;gap:16px;}
+    .flow-step::after{display:none;}
+    .flow-step-inner{margin-right:0;}
+    .quincena-row{flex-direction:column;gap:16px;padding:24px;}
+    .quincena-divider{display:none;}
+    .flow-quarterly{flex-direction:column;gap:16px;padding:24px;}
+    .comparativo{grid-template-columns:1fr;}
+    .inversion-box{flex-direction:column;align-items:flex-start;padding:32px 24px;gap:24px;}
+    .inv-left .inv-price{font-size:38px;}
+    .inv-conditions{min-width:unset;width:100%;}
+    .bonus-box{flex-direction:column;gap:16px;padding:24px;}
+    .site-footer{flex-direction:column;gap:16px;}
+    .site-footer p{text-align:left;}
+  }
+  @media(max-width:480px){
+    .wrapper{padding:0 16px 60px;}
+    .cover h1{font-size:clamp(26px,9vw,36px);}
+    .alcance-items{gap:8px;}
+    .alcance-item{font-size:12px;padding:7px 12px;}
+    .inv-left .inv-price{font-size:30px;}
+    .analisis-precio{padding:24px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="blob-container blob-tr"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="blob-container blob-br"><div class="blob b1"></div><div class="blob b2"></div></div>
+
+<div class="wrapper">
+
+  <header class="site-header">
+    <div class="logo"><img src="data:image/jpeg;base64,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" alt="BLÜR" style="height:46px;width:auto;display:block;"></div>
+    <div class="doc-tag">Propuesta Comercial · Real Taquería · 2026</div>
+  </header>
+
+  <section class="cover">
+    <div class="eyebrow">01 · Propuesta Estratégica</div>
+    <h1>Tienen el contenido.<br>Les falta el sistema<br><em>que lo convierte en clientes.</em></h1>
+    <p class="subtitle">Real Taquería está produciendo videos para redes. El problema: sin estrategia, sin lectura de datos y sin pauta que los amplifique, ese esfuerzo no se convierte en más ventas. BLÜR construye el sistema completo que conecta el contenido con los resultados reales del negocio.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><label>Cliente</label><span>Real Taquería</span></div>
+      <div class="cover-meta-item"><label>Ubicación</label><span>Salt Lake City, USA</span></div>
+      <div class="cover-meta-item"><label>Formatos</label><span>Walk In · Drive Thru</span></div>
+      <div class="cover-meta-item"><label>Líneas de negocio</label><span>Restaurante · Salsas · Desayunos · Catering</span></div>
+      <div class="cover-meta-item"><label>Canales</label><span>Meta Ads · Instagram · Facebook</span></div>
+      <div class="cover-meta-item"><label>Fecha</label><span>Julio 2026</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">02 · Diagnóstico</div>
+    <h2 class="section-title">El problema no es el contenido.<br><em>Es que trabaja solo, sin sistema.</em></h2>
+    <p class="section-intro">Están produciendo videos para redes. Pero sin estrategia detrás, sin datos que dirijan las decisiones y sin pauta que amplifique lo que funciona, ese contenido existe sin rendir. El esfuerzo está: lo que falta es la dirección.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="num">01</div>
+        <h3>Contenido sin estrategia ni sistema</h3>
+        <p>Producir videos para redes sin una estrategia definida es hacer marketing por intuición. <strong>Sin saber qué publicar, para quién, cuándo y con qué objetivo, el contenido ocupa espacio pero no construye negocio.</strong></p>
+      </div>
+      <div class="problem-card">
+        <div class="num">02</div>
+        <h3>Tienen la data. No la están leyendo.</h3>
+        <p>Real Taquería cuenta con mucha información: Point of Sale, pedidos, historial de ventas por formato (Walk In vs Drive Thru), comportamiento por día y horario. <strong>El problema no es falta de datos: es que nadie los está convirtiendo en decisiones de marketing.</strong></p>
+      </div>
+      <div class="problem-card">
+        <div class="num">03</div>
+        <h3>Múltiples líneas, una sola voz</h3>
+        <p>Restaurante, salsas, desayunos y catering son cuatro conversaciones distintas. Walk In y Drive Thru son dos experiencias diferentes. <strong>Sin una estrategia de contenido que diferencie cada línea y cada formato, todo compite entre sí.</strong></p>
+      </div>
+      <div class="problem-card">
+        <div class="num">04</div>
+        <h3>Sin pauta ni tablero de control</h3>
+        <p>El contenido orgánico tiene un techo. Sin pauta activa que lo amplifique y sin un dashboard que mida resultados reales, <strong>no hay forma de saber qué está funcionando, qué no, ni cómo crecer de forma controlada.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">03 · Lo Que Hacemos</div>
+    <h2 class="section-title">Un aliado remoto<br><em>que opera como si fuera interno.</em></h2>
+    <p class="section-intro">La estrategia de Real Taquería se define una vez y se defiende. Lo que evoluciona cada mes son las tácticas, alimentadas por los datos reales del negocio y del mercado.</p>
+
+    <div class="slp-box">
+      <div class="slp-label">Aliado Estratégico · No agencia de contenido</div>
+      <h3>BLÜR no produce más videos. Construye el sistema que los hace rendir.</h3>
+      <p>El contenido ya existe. Lo que no existe es la estrategia que lo dirige, los datos que lo informan y la pauta que lo amplifica. <strong>Cada pieza que produce BLÜR responde a una pregunta concreta: ¿esto trae más clientes a Real Taquería o no?</strong> Si no responde esa pregunta, no va.</p>
+    </div>
+
+    <div class="finding-list">
+      <div class="finding">
+        <div class="finding-icon blue">📊</div>
+        <div class="finding-body">
+          <h4>Manejo de Pauta (Meta Ads)</h4>
+          <p>Gestión estratégica de campañas en Facebook e Instagram orientadas a tráfico, pedidos y reconocimiento en Salt Lake City. <strong>Segmentación por zona geográfica, momentos de consumo y perfiles de cliente de la categoría restaurantes.</strong> A/B testing, optimización continua y medición real de resultados.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon orange">📈</div>
+        <div class="finding-body">
+          <h4>Análisis de Datos del Sistema de Compra (Point of Sale)</h4>
+          <p>Real Taquería ya tiene mucha data. El trabajo es convertirla en decisiones. <strong>Lectura mensual del Point of Sale cruzada por formato (Walk In vs Drive Thru), por línea de negocio, por horario y por ticket promedio.</strong> Esa información alimenta directamente la segmentación de pauta, la estrategia de contenido y el desarrollo de desayunos, salsas y catering como líneas escalables.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon purple">🗺️</div>
+        <div class="finding-body">
+          <h4>Dashboard de Marketing y Negocio</h4>
+          <p>Creación de un dashboard centralizado que integra métricas de pauta, redes sociales y datos del negocio. <strong>Un solo lugar donde Real Taquería ve en tiempo real qué está funcionando,</strong> cuánto se está invirtiendo y qué genera cada dólar en pauta.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon orange">🎬</div>
+        <div class="finding-body">
+          <h4>Contenido Estratégico Remoto</h4>
+          <p>Real Taquería envía fotos y videos desde el restaurante. BLÜR los convierte en <strong>12 videos editados y 10 piezas gráficas mensuales con dirección creativa, copy y criterio editorial</strong> detrás de cada pieza. Todo con dirección creativa y copy que entiende la categoría restaurante.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon blue">🔎</div>
+        <div class="finding-body">
+          <h4>Investigación, Marketing Estratégico y Alianzas</h4>
+          <p>Análisis de competencia local en Salt Lake City, tendencias de la categoría taquería en el mercado estadounidense y mapa de oportunidades por línea de negocio. <strong>Estrategia para activar Doordash, otras apps de delivery y programas de tarjetas de lealtad o regalo como canales de adquisición adicionales.</strong> Plan de desarrollo de desayunos, salsas y catering con posicionamiento diferenciado para cada línea, y estrategia de contenido que distinga Walk In de Drive Thru.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon green">🤝</div>
+        <div class="finding-body">
+          <h4>Seguimiento Quincenal</h4>
+          <p>Dos sesiones al mes de revisión de métricas, ajuste de campañas y alineación estratégica. <strong>Reporte estructurado antes de cada sesión para que el equipo de Real Taquería llegue informado.</strong> Cada call termina con decisiones claras y acciones definidas para la siguiente quincena.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-icon purple">🗓️</div>
+        <div class="finding-body">
+          <h4>Acompañamiento Estratégico Trimestral</h4>
+          <p>Cada 3 meses, una sesión profunda de revisión de negocio: <strong>desempeño acumulado, estrategia de desayunos, oportunidades de mercado y hoja de ruta del siguiente trimestre.</strong> Entregable: documento estratégico de una página con decisiones y próximos pasos concretos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">04 · Alcance Mensual</div>
+    <h2 class="section-title">Qué incluye cada mes.<br><em>Sin sorpresas.</em></h2>
+    <p class="section-intro">Entregables concretos, proceso claro. Esto es exactamente lo que recibe Real Taquería cada mes.</p>
+    <div class="highlight-row">
+      <div class="highlight-pill"><div class="hp-num orange">12</div><div class="hp-label">Videos por mes</div></div>
+      <div class="highlight-pill"><div class="hp-num">10</div><div class="hp-label">Piezas gráficas por mes</div></div>
+      <div class="highlight-pill"><div class="hp-num orange">2</div><div class="hp-label">Sesiones quincenales</div></div>
+      <div class="highlight-pill"><div class="hp-num">1</div><div class="hp-label">Dashboard centralizado</div></div>
+    </div>
+    <div class="alcance-grid">
+      <div class="alcance-card">
+        <span class="ac-icon">🎬</span>
+        <h3>Videos Editados</h3>
+        <p>12 videos por mes distribuidos entre contenido orgánico y piezas para pauta. Edición profesional con dirección creativa y copy: producto, momentos del restaurante, Drive Thru, desayunos y temporadas.</p>
+        <div class="ac-quantity">12 videos / mes</div>
+      </div>
+      <div class="alcance-card">
+        <span class="ac-icon">📸</span>
+        <h3>Piezas Gráficas</h3>
+        <p>10 piezas por mes divididas en carruseles, historias y posts diseñados para anunciar promociones, nuevos productos o eventos. Incluye diseño cuando el restaurante necesita comunicar algo puntual.</p>
+        <div class="ac-quantity">10 piezas gráficas / mes</div>
+      </div>
+      <div class="alcance-card">
+        <span class="ac-icon">📊</span>
+        <h3>Gestión de Pauta Meta Ads</h3>
+        <p>Setup, gestión y optimización de campañas en Facebook e Instagram. Segmentación por zona, momentos de consumo y categoría restaurante. A/B testing y medición continua.</p>
+        <div class="ac-quantity">Meta Ads activa</div>
+      </div>
+      <div class="alcance-card">
+        <span class="ac-icon">🗺️</span>
+        <h3>Dashboard</h3>
+        <p>Dashboard centralizado con métricas de pauta, redes y datos del Point of Sale integrados. Actualización mensual y acceso permanente para el equipo de Real Taquería.</p>
+        <div class="ac-quantity">Actualización mensual</div>
+      </div>
+      <div class="alcance-card">
+        <span class="ac-icon">📈</span>
+        <h3>Análisis de Datos Point of Sale</h3>
+        <p>Lectura mensual del sistema de compra para identificar oportunidades de menú, horarios pico y comportamiento de compra que alimentan la estrategia del mes siguiente.</p>
+        <div class="ac-quantity">Análisis mensual</div>
+      </div>
+      <div class="alcance-card">
+        <span class="ac-icon">🤝</span>
+        <h3>Seguimiento Quincenal</h3>
+        <p>Dos calls mensuales con agenda y reporte previo. Revisión de métricas, ajuste de campañas y decisiones claras. Sin reuniones de estatus vacías.</p>
+        <div class="ac-quantity">2 sesiones / mes</div>
+      </div>
+    </div>
+    <div class="alcance-full">
+      <h3>También incluido</h3>
+      <div class="alcance-items">
+        <div class="alcance-item"><span class="dot"></span>Estrategia de contenido mensual</div>
+        <div class="alcance-item"><span class="dot"></span>Copy para todos los formatos</div>
+        <div class="alcance-item"><span class="dot"></span>Investigación de competencia local</div>
+        <div class="alcance-item"><span class="dot"></span>Estrategia Walk In vs Drive Thru</div>
+        <div class="alcance-item"><span class="dot"></span>Estrategia Doordash y apps de delivery</div>
+        <div class="alcance-item"><span class="dot"></span>Plan desayunos, salsas y catering</div>
+        <div class="alcance-item"><span class="dot"></span>A/B testing en campañas de pauta</div>
+        <div class="alcance-item"><span class="dot"></span>Reporte mensual de resultados</div>
+        <div class="alcance-item"><span class="dot"></span>Acompañamiento estratégico trimestral</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">05 · Metodología de Trabajo</div>
+    <h2 class="section-title">Ruta propuesta<br><em>para lograr los resultados.</em></h2>
+    <p class="section-intro">Cuatro fases que operan en paralelo y en ciclo. No es un proceso lineal: es un sistema donde cada fase alimenta a las demás mes a mes.</p>
+
+    <div class="method-grid">
+      <div class="method-phase">
+        <div class="method-num">1.</div>
+        <div class="method-header">Entendimiento e Interpretación</div>
+        <p class="method-obj"><strong>Objetivo:</strong> Comprender a fondo el modelo de negocio de Real Taquería, sus canales actuales, el comportamiento del cliente y las oportunidades del menú y la operación.</p>
+        <ul class="method-list">
+          <li>Reunión de brief inicial con el equipo del restaurante</li>
+          <li>Análisis de campañas activas y creatividades existentes</li>
+          <li>Evaluación de KPIs actuales (ventas, tráfico, engagement)</li>
+          <li>Benchmark de competidores en la categoría taquería en Salt Lake City</li>
+          <li>Auditoría del sistema Point of Sale y datos de compra</li>
+          <li>Revisión de la estrategia de contenido vigente</li>
+        </ul>
+      </div>
+      <div class="method-phase">
+        <div class="method-num">2.</div>
+        <div class="method-header">Estrategia Digital y de Performance</div>
+        <p class="method-obj"><strong>Objetivo:</strong> Diseñar una estrategia integral de pauta y contenido que escale el tráfico y las ventas del restaurante en sus dos formatos y active las líneas de negocio con mayor potencial.</p>
+        <ul class="method-list">
+          <li>Plan maestro de Meta Ads (Facebook + Instagram)</li>
+          <li>Campañas diferenciadas: Walk In vs Drive Thru</li>
+          <li>Estrategia de activación en Doordash y apps de delivery</li>
+          <li>Programa de tarjetas de lealtad o regalo como canal de adquisición</li>
+          <li>Plan de desarrollo de desayunos, salsas y catering</li>
+          <li>Integración de data del Point of Sale con estrategia de contenido mensual</li>
+        </ul>
+      </div>
+      <div class="method-phase">
+        <div class="method-num">3.</div>
+        <div class="method-header">Comunicación y Contenidos</div>
+        <p class="method-obj"><strong>Objetivo:</strong> Desarrollar contenido estratégico por línea de negocio que conecte con el cliente local y genere conversión desde el primer impacto, en ambos formatos del restaurante.</p>
+        <ul class="method-list">
+          <li>Edición de 12 videos entre pauta y orgánico</li>
+          <li>10 piezas gráficas: carruseles, historias y posts diseñados para anuncios</li>
+          <li>Contenido diferenciado: Walk In, Drive Thru, Catering, Desayunos, Salsas</li>
+          <li>Copy orientado a conversión y categoría restaurante</li>
+          <li>Adaptaciones rápidas según resultados quincenales</li>
+          <li>Dirección creativa del material enviado desde Salt Lake City</li>
+        </ul>
+        <div class="method-note">Bolsa mensual de contenidos incluida.</div>
+      </div>
+      <div class="method-phase">
+        <div class="method-num">4.</div>
+        <div class="method-header">Reportería y Analítica</div>
+        <p class="method-obj"><strong>Objetivo:</strong> Asegurar una operación 100% data-driven con seguimiento permanente de resultados y mejora continua desde Bogotá.</p>
+        <ul class="method-list">
+          <li>Dashboard en tiempo real con KPIs clave (ROAS, CPA, alcance local, ventas atribuibles)</li>
+          <li>Análisis mensual de datos del sistema Point of Sale</li>
+          <li>Seguimiento quincenal con agenda y reporte previo</li>
+          <li>Ajustes de campañas y presupuesto con base en datos</li>
+          <li>Acompañamiento estratégico trimestral</li>
+          <li>Propuestas de mejora iterativa para maximizar resultados</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;">Ciclo operativo mensual</div>
+    <div class="flow-steps" style="margin-bottom:24px;">
+      <div class="flow-step">
+        <div class="flow-step-inner">
+          <div class="fs-tag">Días 1-3</div>
+          <h4>Envío de materiales</h4>
+          <ul>
+            <li>Fotos y videos crudos del restaurante</li>
+            <li>Datos del Point of Sale del período anterior</li>
+            <li>Novedades: menú, promos, eventos</li>
+            <li>Canal: carpeta Drive compartida</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-inner">
+          <div class="fs-tag">Días 3-10</div>
+          <h4>Producción y análisis</h4>
+          <ul>
+            <li>Edición de 12 videos y 10 piezas gráficas</li>
+            <li>Análisis de datos del Point of Sale</li>
+            <li>Actualización del dashboard</li>
+            <li>Ajuste de estrategia de pauta</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-inner">
+          <div class="fs-tag">Días 10-12</div>
+          <h4>Aprobación</h4>
+          <ul>
+            <li>Envío de contenido para revisión</li>
+            <li>Respuesta máx. 48 horas</li>
+            <li>Ajustes si aplica</li>
+            <li>Aprobación y activación</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-inner">
+          <div class="fs-tag">Días 12-30</div>
+          <h4>Activación y monitoreo</h4>
+          <ul>
+            <li>Publicación del contenido aprobado</li>
+            <li>Pauta activa y optimizada</li>
+            <li>Monitoreo de métricas diario</li>
+            <li>Ajustes de campaña en tiempo real</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="quincena-row">
+      <div class="quincena-col">
+        <div class="qc-title">Primera quincena (día 15)</div>
+        <p>Revisión de métricas de las primeras 2 semanas. Ajuste de campañas activas. Aprobación de contenido para la segunda quincena si aplica.</p>
+      </div>
+      <div class="quincena-divider"></div>
+      <div class="quincena-col">
+        <div class="qc-title">Cierre de mes (días 28-30)</div>
+        <p>Reporte mensual completo con métricas y datos del Point of Sale. Decisiones de estrategia para el mes siguiente. Brief de materiales a producir y enviar.</p>
+      </div>
+    </div>
+
+    <div class="flow-quarterly">
+      <div class="fq-icon">🗓️</div>
+      <div>
+        <h4>Acompañamiento estratégico trimestral (meses 3, 6, 9...)</h4>
+        <p>Sesión de 90 minutos de revisión profunda: <strong>desempeño acumulado, análisis del Point of Sale del trimestre, estrategia de expansión de desayunos, oportunidades de mercado en Salt Lake City</strong> y hoja de ruta del siguiente trimestre. Entregable: documento estratégico de una página con decisiones y próximos pasos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">06 · Inversión</div>
+    <h2 class="section-title">$2.000 USD al mes.<br><em>El sistema completo, no el servicio suelto.</em></h2>
+    <p class="section-intro">Contratar cada parte de esto por separado en Salt Lake City cuesta entre $4.000 y $6.800 USD al mes. BLÜR lo centraliza todo en un solo equipo, con un solo punto de contacto y resultados medibles desde el primer mes.</p>
+
+    <div class="inversion-box">
+      <div class="inv-left">
+        <div class="inv-label">Fee Mensual · Aliado Estratégico</div>
+        <div class="inv-price">$2.000 <span>USD / mes</span></div>
+        <div class="inv-sub">Todo incluido excepto la inversión publicitaria en Meta Ads</div>
+      </div>
+      <div class="inv-conditions">
+        <div class="inv-condition"><div class="ic-dot"></div><p><strong>Dashboard incluido.</strong> Creación y mantenimiento del tablero centralizado sin costo adicional.</p></div>
+        <div class="inv-condition"><div class="ic-dot"></div><p><strong>Análisis Point of Sale incluido.</strong> Lectura mensual de datos del sistema de compra dentro del fee.</p></div>
+        <div class="inv-condition"><div class="ic-dot"></div><p><strong>Trimestral incluido.</strong> Sesiones estratégicas de 90 min sin cobro adicional.</p></div>
+        <div class="inv-condition"><div class="ic-dot"></div><p><strong>Factura mensual en USD.</strong> Mes vencido, sin contratos de largo plazo forzosos.</p></div>
+      </div>
+    </div>
+
+    <div class="analisis-precio">
+      <h4>Por qué $2.000 USD es el precio correcto y cómo defenderlo</h4>
+      <div class="comparativo">
+        <div class="comp-item">
+          <div class="comp-label">Agencia de contenido (Salt Lake City)</div>
+          <div class="comp-price">$2.500+ USD</div>
+          <div class="comp-desc">Solo producción. Sin estrategia, sin datos, sin pauta</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-label">Gestor de pauta + analista (USA)</div>
+          <div class="comp-price">$2.000+ USD</div>
+          <div class="comp-desc">Solo pauta y datos. Sin contenido ni estrategia</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-label">BLÜR · Sistema completo</div>
+          <div class="comp-price highlight">$2.000 USD</div>
+          <div class="comp-desc">Todo integrado: estrategia + contenido + pauta + datos + dashboard + trimestral</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:20px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Si contrataran todo por separado</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Estrategia e investigación</span><span style="font-weight:600;">$800-1.200 USD</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Producción de contenido (12 videos + 10 piezas gráficas)</span><span style="font-weight:600;">$1.500-2.500 USD</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Gestión de pauta Meta Ads</span><span style="font-weight:600;">$800-1.500 USD</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Análisis de datos del Point of Sale + dashboard</span><span style="font-weight:600;">$600-1.000 USD</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Reportes y seguimiento quincenal</span><span style="font-weight:600;">$400-600 USD</span></div>
+            <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;justify-content:space-between;font-size:14px;"><span style="font-weight:700;">Total si fuera por separado</span><span style="font-weight:800;color:var(--orange);">$4.100-6.800 USD</span></div>
+          </div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:20px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Alternativa: contratar internamente</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Social media manager (salario anual)</span><span style="font-weight:600;">$45.000 USD</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Beneficios y cargas (~30%)</span><span style="font-weight:600;">$13.500 USD</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Equipos y herramientas</span><span style="font-weight:600;">$3.000 USD</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--muted);">Curva de aprendizaje de la categoría</span><span style="font-weight:600;">Meses perdidos</span></div>
+            <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;justify-content:space-between;font-size:14px;"><span style="font-weight:700;">Costo real al año</span><span style="font-weight:800;color:var(--orange);">$61.500+ USD</span></div>
+          </div>
+        </div>
+      </div>
+      <p><strong>$2.000 USD/mes son $24.000 USD al año.</strong> La mitad de lo que cuesta un empleado interno sin experiencia en la categoría, y una fracción de lo que costaría armar el equipo por separado. BLÜR llega con el sistema listo, el conocimiento de restaurantes y la capacidad de operar desde el día uno. <strong>No es un gasto: es la inversión de marketing más eficiente que puede hacer Real Taquería en este momento.</strong></p>
+    </div>
+
+    <div class="bonus-box">
+      <div class="bonus-icon">📌</div>
+      <div class="bonus-body">
+        <h4>Lo que Real Taquería necesita poner de su parte</h4>
+        <p>El modelo remoto funciona cuando el restaurante cumple su rol en el flujo. <strong>Envío de materiales en los primeros 3 días del mes,</strong> aprobaciones en máx. 48 horas, acceso o exportación mensual de datos del Point of Sale, y participación activa en los dos seguimientos quincenales. Sin eso, el trabajo de BLÜR pierde contexto y la calidad se resiente por factores fuera de su control.</p>
+      </div>
+    </div>
+
+    <div class="no-incluye">
+      <div class="ni-icon">ℹ️</div>
+      <div>
+        <h4>No incluye</h4>
+        <p><strong>Inversión publicitaria en Meta Ads</strong> (la pone Real Taquería directamente en su cuenta: recomendamos mínimo $500 a $1.000 USD/mes para resultados medibles en la categoría). <strong>Producción de foto o video en el restaurante</strong> (el equipo graba y envía el material crudo: BLÜR edita y dirige). <strong>Desarrollo o mantenimiento de website.</strong> <strong>Gestión de plataformas de delivery o reservas</strong> (fuera del alcance).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cierre">
+    <div class="cierre-label">07 · Siguiente Paso</div>
+    <h2>Real Taquería ya tiene<br>los ingredientes.<br><em>BLÜR pone la estrategia.</em></h2>
+    <p>El equipo está disponible. La única variable que falta es confirmar la fecha de inicio y el acceso al sistema Point of Sale para el primer análisis.</p>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-logo"><img src="data:image/jpeg;base64,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" alt="BLÜR" style="height:28px;width:auto;display:block;opacity:0.35;"></div>
+    <p>BLÜR Collective · Propuesta Comercial 2026<br>Real Taquería · Salt Lake City, USA</p>
+  </footer>
+
+</div>
+</body>
+</html>
